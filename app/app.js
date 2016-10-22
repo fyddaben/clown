@@ -5,15 +5,19 @@ var Canvas = require('canvas')
   , Image = Canvas.Image;
 var _ = require('lodash');
 var glob = require('glob');
+var gulp = require('gulp');
+var template = require('gulp-template');
+
 var program = require('commander');
 program
    .allowUnknownOption()
    .version('0.0.1')
-   .option('-b, --bcolor <bc>', 'video background color')
-   .option('-w, --width <wd>', 'video width')
-   .option('-g, --height <hg>', 'video height')
+   .option('-b, --bcolor <bc>', 'Video background color')
+   .option('-f, --fps <fps>', 'Video frame count per seconds')
+   .option('-w, --width <wd>', 'Video width')
+   .option('-g, --height <hg>', 'Video height')
    .parse(process.argv);
-if (program.bcolor && program.width && program.height) {
+if (program.bcolor && program.width && program.height && program.fps) {
 
 } else {
   console.log('Error: Please pass backgroundColor, width and height of video \nType -h see help');
@@ -28,6 +32,7 @@ for (var i = 0; i< 64; i++) {
 }
 var imgWid = parseInt(program.width);
 var imgHei = parseInt(program.height);
+var fps = parseInt(program.fps);
 
 // 判断是否可以被8 整除
 if ((imgWid % 8 != 0) || (imgHei % 8!=0)) {
@@ -39,12 +44,24 @@ var rectWid = imgWid;
 var canvas = new Canvas(imgWid, imgHei);
 var ctx = canvas.getContext('2d');
 var readMultipleFiles = require('read-multiple-files');
-console.log(imgWid, imgHei, backColor);
 
 // 存储所有图像buffer image对象的缓存
 var imgCache = [];
 
 getAllFiles();
+createTmpl();
+
+// 生成前端模板
+function createTmpl() {
+  gulp.src('./tmpl/index.html')
+      .pipe(template({
+        width:imgWid,
+        height: imgHei,
+        background: backColor,
+        fps: fps
+      }))
+      .pipe(gulp.dest('./dist'))
+}
 
 function getAllFiles() {
   glob(__dirname + '/img/*.jpg', function(er, files) {
@@ -248,17 +265,17 @@ function redrawByOrder(frameArr) {
       storeCreateFile(storeDataArr);
       return false;
     }
-    if (bigestNum == -1 && storeDataArr.length < frameArr.length) {
-      lineAmount++;
-      curY+= 8;
-      curX = 0;
-      leftWid = rectWid;
-      if (lineAmount == unitLine * (curImgIndex + 1)) {
-        curY = 0;
-        curImgIndex++;
-      }
-      loopCheckNext();
-    }
+    //if (bigestNum == -1 && storeDataArr.length < frameArr.length) {
+    //  lineAmount++;
+    //  curY+= 8;
+    //  curX = 0;
+    //  leftWid = rectWid;
+    //  if (lineAmount == unitLine * (curImgIndex + 1)) {
+    //    curY = 0;
+    //    curImgIndex++;
+    //  }
+    //  loopCheckNext();
+    //}
     // 包含最大数的集合
     var bigestObj = orderFrameArray[bigestNum];
 
@@ -375,7 +392,7 @@ function storeCreateFile(frameArray) {
     newFrameArr.push(child);
   });
 
-  fs.writeFile(__dirname + '/dist/frame.json', JSON.stringify({w: rectWid, h: imgHei, v:newFrameArr}), function(err){
+  fs.writeFile(__dirname + '/dist/frame.json', JSON.stringify({w: rectWid, h: imgHei, c:backColor , v:newFrameArr}), function(err){
     if(err) throw err;
     console.log('Json file has done');
   });
@@ -440,10 +457,6 @@ function readFileAndGetAxis(squid, frameindex) {
       frameindex:frindexArr
     });
   });
-  //mergeAxisArray.forEach(function(e) {
-  //  ctx.drawImage(img, e.x, e.y, e.w, e.h, e.x, e.y, e.w, e.h);
-  //});
-  //canvas.createPNGStream().pipe(fs.createWriteStream(path.join(__dirname, 'dist/lw_'+frameindex+'.png')));
   return mergeAxisArray;
 }
 

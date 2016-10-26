@@ -6,5 +6,5 @@ dev:
     - "2026:3001"
   container_name: "splitVideo"
   volumes:
-    - .:/home/work/
+    - /Users/daben/code/testVideo:/home/work/video
   command: tail -f /dev/null

@@ -6,7 +6,9 @@ ENV VERSION=v0.12.15 NPM_VERSION=2
 
 RUN apk add --update  build-base musl python unzip bash
 
-RUN mkdir /home/work/
+RUN mkdir -p /home/work/video  
+
+RUN cd /home/work &&  wget https://github.com/fyddaben/clown/archive/master.zip 
 
 VOLUME ["/home/work"]
 

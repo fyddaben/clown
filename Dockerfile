@@ -1,10 +1,8 @@
-FROM iron/node:0.12
+FROM geekduck/node-canvas:latest
 
 MAINTAINER fyddaben <838730592@qq.com>
 
-ENV VERSION=v0.12.15 NPM_VERSION=2
-
-RUN apk add --update  build-base musl python unzip bash cairo pango pkgconfig xproto renderproto kbproto xextproto 
+RUN apt-get update && apt-get install -y unzip bash
 
 RUN mkdir -p /home/work/video  
 

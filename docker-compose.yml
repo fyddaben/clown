@@ -1,6 +1,6 @@
-dev:
+videodev:
   build: .
   container_name: "splitVideo"
   volumes:
-    - /Users/daben/code/testVideo:/home/work/
+    - /Users/daben/code/testVideo:/home/work/video
   command: tail -f /dev/null

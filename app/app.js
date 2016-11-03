@@ -266,17 +266,6 @@ function redrawByOrder(frameArr) {
       storeCreateFile(storeDataArr);
       return false;
     }
-    //if (bigestNum == -1 && storeDataArr.length < frameArr.length) {
-    //  lineAmount++;
-    //  curY+= 8;
-    //  curX = 0;
-    //  leftWid = rectWid;
-    //  if (lineAmount == unitLine * (curImgIndex + 1)) {
-    //    curY = 0;
-    //    curImgIndex++;
-    //  }
-    //  loopCheckNext();
-    //}
     // 包含最大数的集合
     var bigestObj = orderFrameArray[bigestNum];
 
@@ -331,7 +320,7 @@ function redrawByOrder(frameArr) {
       loopCheckNext();
     }
   }
-  //loopCheckNext();
+  loopCheckNext();
 
 }
 

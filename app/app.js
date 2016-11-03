@@ -53,14 +53,14 @@ createTmpl();
 
 // 生成前端模板
 function createTmpl() {
-  gulp.src('./tmpl/index.html')
+  gulp.src(__dirname + '/tmpl/index.html')
       .pipe(template({
         width:imgWid,
         height: imgHei,
         background: backColor,
         fps: fps
       }))
-      .pipe(gulp.dest('./dist'))
+      .pipe(gulp.dest(__dirname + '/dist'))
 }
 
 function getAllFiles() {
@@ -246,6 +246,7 @@ function redrawByOrder(frameArr) {
 
   // 方块的索引
   var rectindex = 0;
+  console.log(orderFrameArray.length,'length');
 
   // 所有对象的数量
   function loopCheckNext() {
@@ -330,7 +331,7 @@ function redrawByOrder(frameArr) {
       loopCheckNext();
     }
   }
-  loopCheckNext();
+  //loopCheckNext();
 
 }
 

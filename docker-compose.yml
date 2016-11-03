@@ -1,10 +1,6 @@
 dev:
   build: .
-  ports:
-    - "2024:22"
-    - "2025:3000"
-    - "2026:3001"
   container_name: "splitVideo"
   volumes:
-    - /Users/daben/code/testVideo:/home/work/video
+    - /Users/daben/code/testVideo:/home/work/
   command: tail -f /dev/null

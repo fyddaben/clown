@@ -3,7 +3,7 @@ Translate video to imgs, and use it in production. Use canvas imitate video meth
 
 ## 镜像使用流程
 
-#### 下载环境镜像
+#### 1.下载环境镜像
 
 ```
     docker pull fyddaben/clown:yao
@@ -15,7 +15,7 @@ Translate video to imgs, and use it in production. Use canvas imitate video meth
 docker run -it  -v xxxx:/home/work/video fyddaben/clown:yao /bin/bash
 ```
 
-PS: `xxxx` 是你自己本地，放置视频的绝对地址，最好是在`Users`目录下，否则请在docker->Perference->File Sharing里面进行配置添加
+PS: `xxxx` 是本地共享文件夹，放置视频的绝对地址，最好是在`Users`目录下，否则请在docker->Perference->File Sharing里面进行配置添加
 
 
 #### 3. 启动起来后
